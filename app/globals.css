@@ -1,0 +1,126 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0); /* white */
+  --foreground: oklch(0.35 0.01 258); /* dark gray #475569 */
+  --card: oklch(0.96 0.005 258); /* light gray #f1f5f9 */
+  --card-foreground: oklch(0.35 0.01 258); /* dark gray */
+  --popover: oklch(1 0 0); /* white */
+  --popover-foreground: oklch(0.35 0.01 258); /* dark gray */
+  --primary: oklch(0.45 0.15 160); /* emerald-600 #059669 */
+  --primary-foreground: oklch(1 0 0); /* white */
+  --secondary: oklch(0.96 0.005 258); /* light gray */
+  --secondary-foreground: oklch(0.35 0.01 258); /* dark gray */
+  --muted: oklch(0.96 0.005 258); /* light gray */
+  --muted-foreground: oklch(0.55 0.01 258); /* medium gray */
+  --accent: oklch(0.55 0.15 160); /* emerald accent #10b981 */
+  --accent-foreground: oklch(1 0 0); /* white */
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.9 0.005 258); /* light border #e2e8f0 */
+  --input: oklch(0.96 0.005 258); /* light gray */
+  --ring: oklch(0.45 0.15 160); /* emerald ring */
+  --chart-1: oklch(0.45 0.15 160); /* emerald for troncal routes */
+  --chart-2: oklch(0.55 0.2 220); /* blue for zonal routes */
+  --chart-3: oklch(0.6 0.2 40); /* orange for alimentadora routes */
+  --chart-4: oklch(0.7 0.15 280); /* purple for additional data */
+  --chart-5: oklch(0.65 0.18 320); /* pink for statistics */
+  --radius: 0.5rem; /* Updated to match design brief */
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.35 0.01 258);
+  --sidebar-primary: oklch(0.45 0.15 160);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.96 0.005 258);
+  --sidebar-accent-foreground: oklch(0.35 0.01 258);
+  --sidebar-border: oklch(0.9 0.005 258);
+  --sidebar-ring: oklch(0.45 0.15 160);
+}
+
+.dark {
+  /* Updated dark mode colors to maintain emerald theme */
+  --background: oklch(0.08 0.005 258); /* very dark gray */
+  --foreground: oklch(0.95 0.005 258); /* light text */
+  --card: oklch(0.12 0.005 258); /* dark card background */
+  --card-foreground: oklch(0.95 0.005 258); /* light card text */
+  --popover: oklch(0.12 0.005 258); /* dark popover */
+  --popover-foreground: oklch(0.95 0.005 258); /* light popover text */
+  --primary: oklch(0.55 0.15 160); /* brighter emerald for dark mode */
+  --primary-foreground: oklch(0.08 0.005 258); /* dark text on emerald */
+  --secondary: oklch(0.15 0.005 258); /* dark secondary */
+  --secondary-foreground: oklch(0.95 0.005 258); /* light secondary text */
+  --muted: oklch(0.15 0.005 258); /* dark muted */
+  --muted-foreground: oklch(0.7 0.005 258); /* medium muted text */
+  --accent: oklch(0.6 0.15 160); /* bright emerald accent */
+  --accent-foreground: oklch(0.08 0.005 258); /* dark accent text */
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.2 0.005 258); /* dark border */
+  --input: oklch(0.15 0.005 258); /* dark input */
+  --ring: oklch(0.55 0.15 160); /* emerald ring */
+  --chart-1: oklch(0.55 0.15 160); /* emerald for troncal routes */
+  --chart-2: oklch(0.6 0.2 220); /* blue for zonal routes */
+  --chart-3: oklch(0.65 0.2 40); /* orange for alimentadora routes */
+  --chart-4: oklch(0.7 0.15 280); /* purple for additional data */
+  --chart-5: oklch(0.7 0.18 320); /* pink for statistics */
+  --sidebar: oklch(0.1 0.005 258);
+  --sidebar-foreground: oklch(0.95 0.005 258);
+  --sidebar-primary: oklch(0.55 0.15 160);
+  --sidebar-primary-foreground: oklch(0.08 0.005 258);
+  --sidebar-accent: oklch(0.15 0.005 258);
+  --sidebar-accent-foreground: oklch(0.95 0.005 258);
+  --sidebar-border: oklch(0.2 0.005 258);
+  --sidebar-ring: oklch(0.55 0.15 160);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
