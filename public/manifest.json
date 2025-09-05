@@ -1,0 +1,21 @@
+{
+  "name": "transMiApp",
+  "short_name": "transMiApp",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0078d4",
+  "description": "App de gestión y visualización de transporte público.",
+  "icons": [
+    {
+      "src": "placeholder-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "placeholder-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

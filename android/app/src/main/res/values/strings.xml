@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">transMiApp</string>
+    <string name="title_activity_main">transMiApp</string>
+    <string name="package_name">com.transmi.app</string>
+    <string name="custom_url_scheme">com.transmi.app</string>
+</resources>
