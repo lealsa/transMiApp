@@ -2,12 +2,14 @@ import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { Analytics } from '@vercel/analytics/next'
+import { ThemeProvider } from '../components/theme-provider'
+import ServiceWorkerRegister from '../components/ServiceWorkerRegister'
+import { BottomNav } from '../components/BottomNav'
 import './globals.css'
-import ServiceWorkerRegister from '../components/ServiceWorkerRegister';
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'TransMilenio App',
+  description: 'App para consultar rutas y horarios de TransMilenio en Bogotá',
   generator: 'v0.app',
 }
 
@@ -17,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#0078d4" />
@@ -29,10 +31,20 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/placeholder-logo.png" />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <ServiceWorkerRegister />
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ServiceWorkerRegister />
+          {children}
+          <BottomNav />
+          {/* Bottom padding to account for fixed navigation */}
+          <div className="h-20"></div>
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>
-  );
+  )
 }
