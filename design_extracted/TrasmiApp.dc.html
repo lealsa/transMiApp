@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_ds/organic-4adfda63-41d6-4701-9ce5-6a641b4f4572/styles.css">
+<script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+<style>
+body{margin:0;background:#e7e0d3}
+a{color:#8c491a}a:hover{color:#b2622d}
+.tmi svg{stroke-width:2.75}
+.tmi-scroll::-webkit-scrollbar{width:0}
+</style>
+</helmet>
+<div class="tmi" style="min-height:100vh;padding:36px 24px 56px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:20px;font-family:Figtree,system-ui,sans-serif;color:#3a3530">
+
+  <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:760px">
+    <sc-for list="{{ screenTabs }}" as="s" hint-placeholder-count="10">
+      <button onClick="{{ s.go }}" style="{{ s.style }}">{{ s.label }}</button>
+    </sc-for>
+  </div>
+
+  <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" bg="{{ bg }}" hint-size="412px,892px">
+    <div style="{{ themeVars }};height:100%;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);overflow:hidden">
+
+      <div class="tmi-scroll" style="flex:1;overflow-y:auto;scrollbar-width:none">
+
+        <sc-if value="{{ isOnboarding }}">
+          <div data-screen-label="Onboarding" style="min-height:100%;padding:28px 22px 32px;display:flex;flex-direction:column;gap:22px;background:var(--bg)">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:40px;height:40px;border-radius:999px;background:{{ accent }};color:#f5ead8;display:flex;align-items:center;justify-content:center">
+                  <i data-lucide="bus" width="22" height="22"></i>
+                </div>
+                <span style="font-family:Caprasimo,serif;font-size:20px">TrasmiApp</span>
+              </div>
+              <div style="display:flex;border:1px solid var(--border);border-radius:999px;overflow:hidden">
+                <button onClick="{{ setEs }}" style="{{ langEsStyle }}">ES</button>
+                <button onClick="{{ setEn }}" style="{{ langEnStyle }}">EN</button>
+              </div>
+            </div>
+            <div style="position:relative;height:150px;border-radius:32px;background:var(--surf);overflow:hidden;display:flex;align-items:center;justify-content:center">
+              <div style="position:absolute;width:190px;height:190px;border-radius:999px;background:#f6a06b;opacity:.5;left:-40px;top:-50px"></div>
+              <div style="position:absolute;width:120px;height:120px;border-radius:999px;background:#aebf92;opacity:.55;right:-24px;bottom:-36px"></div>
+              <div style="position:relative;width:64px;height:64px;border-radius:999px;background:{{ accent }};color:#f5ead8;display:flex;align-items:center;justify-content:center">
+                <i data-lucide="navigation" width="30" height="30"></i>
+              </div>
+            </div>
+            <div>
+              <h1 style="font-family:Caprasimo,serif;font-size:34px;line-height:1.08;margin:0 0 10px;letter-spacing:-.015em">{{ t.onbTitle }}</h1>
+              <p style="margin:0;font-size:15px;line-height:1.5;color:var(--neu7b)">{{ t.onbSub }}</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ onbPoints }}" as="p" hint-placeholder-count="3">
+                <div style="display:flex;gap:12px;align-items:flex-start;background:var(--surf);border-radius:24px;padding:14px 16px">
+                  <div style="width:34px;height:34px;flex:none;border-radius:999px;background:var(--bg);color:{{ accentDark }};display:flex;align-items:center;justify-content:center">
+                    <i data-lucide="{{ p.icon }}" width="18" height="18"></i>
+                  </div>
+                  <div>
+                    <div style="font-family:Caprasimo,serif;font-size:16px;line-height:1.2">{{ p.title }}</div>
+                    <div style="font-size:13px;color:var(--neu7);line-height:1.45">{{ p.body }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <button onClick="{{ toggleBeginner }}" style="{{ beginnerRowStyle }}">
+              <div style="text-align:left">
+                <div style="font-family:Caprasimo,serif;font-size:16px">{{ t.beginner }}</div>
+                <div style="font-size:12.5px;color:var(--neu7)">{{ t.beginnerDesc }}</div>
+              </div>
+              <div style="{{ switchTrack }}"><div style="{{ switchKnob }}"></div></div>
+            </button>
+            <button onClick="{{ goHome }}" style="margin-top:auto;width:100%;height:54px;border:0;border-radius:999px;background:{{ accent }};color:#f5ead8;font-family:Caprasimo,serif;font-size:17px;cursor:pointer" style-hover="background:{{ accentHover }}">{{ t.start }}</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+          <div data-screen-label="Home" style="padding:20px 18px 24px;display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+              <div>
+                <div style="font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--neu6)">{{ t.greeting }}</div>
+                <h2 style="font-family:Caprasimo,serif;font-size:28px;line-height:1.1;margin:2px 0 0">{{ t.homeTitle }}</h2>
+              </div>
+              <div style="display:flex;gap:8px;flex:none">
+                <button onClick="{{ goAlerts }}" style="width:42px;height:42px;border:0;border-radius:999px;background:{{ accentLight }};color:{{ accentDark }};display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative" style-hover="background:{{ accentTintHover }}">
+                  <i data-lucide="bell" width="20" height="20"></i>
+                </button>
+                <button onClick="{{ goProfile }}" style="width:42px;height:42px;border:0;border-radius:999px;background:var(--surf);color:var(--neu7b);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--surf2)">
+                  <i data-lucide="user" width="20" height="20"></i>
+                </button>
+              </div>
+            </div>
+
+            <div style="background:var(--surf);border-radius:32px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 2px rgba(46,43,37,.14)">
+              <div style="display:flex;gap:10px;align-items:center">
+                <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+                  <div style="position:relative">
+                    <i data-lucide="circle-dot" width="17" height="17" style="position:absolute;left:14px;top:12px;color:{{ sageInk }}"></i>
+                    <input placeholder="{{ t.from }}" value="{{ origin }}" onChange="{{ setOrigin }}" style="width:100%;height:42px;box-sizing:border-box;border-radius:999px;border:1px solid var(--border);background:var(--bg);padding:0 14px 0 40px;font:500 14px Figtree,system-ui,sans-serif;color:var(--ink);outline:none">
+                  </div>
+                  <div style="position:relative">
+                    <i data-lucide="map-pin" width="17" height="17" style="position:absolute;left:14px;top:12px;color:{{ accent }}"></i>
+                    <input placeholder="{{ t.to }}" value="{{ destination }}" onChange="{{ setDestination }}" style="width:100%;height:42px;box-sizing:border-box;border-radius:999px;border:1px solid var(--border);background:var(--bg);padding:0 14px 0 40px;font:500 14px Figtree,system-ui,sans-serif;color:var(--ink);outline:none">
+                  </div>
+                </div>
+                <button onClick="{{ swap }}" style="width:44px;height:44px;flex:none;border:1px solid var(--border);border-radius:999px;background:var(--bg);color:var(--neu7b);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--surf2)">
+                  <i data-lucide="arrow-up-down" width="18" height="18"></i>
+                </button>
+              </div>
+              <button onClick="{{ goResults }}" style="width:100%;height:48px;border:0;border-radius:999px;background:{{ accent }};color:#f5ead8;font-family:Caprasimo,serif;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-hover="background:{{ accentHover }}">
+                <i data-lucide="search" width="18" height="18"></i>{{ t.search }}
+              </button>
+            </div>
+
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <sc-for list="{{ savedPlaces }}" as="p" hint-placeholder-count="3">
+                <button onClick="{{ p.go }}" style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:999px;background:transparent;padding:8px 14px;font:500 13px Figtree,system-ui,sans-serif;color:var(--ink);cursor:pointer" style-hover="background:var(--hover)">
+                  <i data-lucide="{{ p.icon }}" width="15" height="15"></i>{{ p.label }}
+                </button>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{ beginner }}">
+              <div style="display:flex;gap:11px;align-items:flex-start;background:var(--sage-bg);border-radius:24px;padding:14px 16px">
+                <i data-lucide="sprout" width="18" height="18" style="color:{{ sageInk }};flex:none;margin-top:2px"></i>
+                <div style="font-size:13px;line-height:1.45;color:var(--sage-text)">{{ t.beginnerTip }}</div>
+              </div>
+            </sc-if>
+
+            <div>
+              <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px">
+                <h3 style="font-family:Caprasimo,serif;font-size:20px;margin:0">{{ t.nearby }}</h3>
+                <button onClick="{{ goMap }}" style="border:0;background:none;color:{{ accentDark }};font:500 13px Figtree,system-ui,sans-serif;cursor:pointer;padding:2px 4px" style-hover="color:{{ accentHover }}">{{ t.seeMap }}</button>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <sc-for list="{{ nearbyStations }}" as="s" hint-placeholder-count="2">
+                  <button onClick="{{ s.go }}" style="text-align:left;width:100%;border:0;background:var(--surf);border-radius:28px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:inherit" style-hover="background:var(--surf2)">
+                    <div style="width:38px;height:38px;flex:none;border-radius:999px;background:var(--bg);color:{{ accentDark }};display:flex;align-items:center;justify-content:center">
+                      <i data-lucide="bus-front" width="19" height="19"></i>
+                    </div>
+                    <div style="flex:1;min-width:0">
+                      <div style="font-family:Caprasimo,serif;font-size:16px;line-height:1.2">{{ s.name }}</div>
+                      <div style="font-size:12.5px;color:var(--neu7)">{{ s.meta }}</div>
+                    </div>
+                    <div style="text-align:right">
+                      <div style="font-family:Caprasimo,serif;font-size:19px;color:{{ accentDark }};line-height:1">{{ s.mins }}</div>
+                      <div style="font-size:11px;color:var(--neu6)">min</div>
+                    </div>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+
+            <button onClick="{{ goAlerts }}" style="text-align:left;width:100%;border:0;border-left:5px solid {{ accent }};border-radius:24px;background:{{ accentLight }};padding:14px 16px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-family:inherit" style-hover="background:{{ accentTintHover }}">
+              <i data-lucide="alert-triangle" width="18" height="18" style="color:{{ accentDark }};flex:none;margin-top:2px"></i>
+              <div>
+                <div style="font-weight:600;font-size:14px;color:{{ accentDark }}">{{ t.alertHomeTitle }}</div>
+                <div style="font-size:12.5px;color:{{ accentDark }};line-height:1.45">{{ t.alertHomeBody }}</div>
+              </div>
+            </button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isResults }}">
+          <div data-screen-label="Results" style="padding:16px 18px 24px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <button onClick="{{ goHome }}" style="width:40px;height:40px;flex:none;border:0;border-radius:999px;background:var(--surf);color:var(--neu7b);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--surf2)"><i data-lucide="arrow-left" width="19" height="19"></i></button>
+              <div style="min-width:0">
+                <div style="font-family:Caprasimo,serif;font-size:19px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Suba → Calle 26</div>
+                <div style="font-size:12.5px;color:var(--neu7)">{{ t.resultsMeta }}</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button onClick="{{ sortFast }}" style="{{ sortFastStyle }}">{{ t.fastest }}</button>
+              <button onClick="{{ sortEasy }}" style="{{ sortEasyStyle }}">{{ t.fewest }}</button>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ options }}" as="o" hint-placeholder-count="3">
+                <button onClick="{{ o.go }}" style="{{ o.cardStyle }}">
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+                    <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;flex:1;min-width:0;align-content:flex-start">
+                      <sc-for list="{{ o.legs }}" as="l" hint-placeholder-count="2">
+                        <span style="{{ l.style }}">{{ l.label }}</span>
+                      </sc-for>
+                    </div>
+                    <div style="text-align:right;flex:none">
+                      <div style="font-family:Caprasimo,serif;font-size:24px;line-height:1">{{ o.mins }}</div>
+                      <div style="font-size:11px;color:var(--neu6);letter-spacing:.06em">MIN</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:14px;font-size:12.5px;color:var(--neu7);flex-wrap:wrap">
+                    <span style="display:inline-flex;align-items:center;gap:5px"><i data-lucide="repeat" width="14" height="14"></i>{{ o.transfers }}</span>
+                    <span style="display:inline-flex;align-items:center;gap:5px"><i data-lucide="footprints" width="14" height="14"></i>{{ o.walk }}</span>
+                    <span style="display:inline-flex;align-items:center;gap:5px;color:{{ o.crowdColor }}"><i data-lucide="users" width="14" height="14"></i>{{ o.crowd }}</span>
+                    <span style="margin-left:auto;font-weight:600;color:var(--ink)">{{ o.fare }}</span>
+                  </div>
+                  <sc-if value="{{ beginner }}">
+                    <div style="font-size:12.5px;line-height:1.45;color:var(--sage-text);background:var(--sage-bg);border-radius:16px;padding:9px 12px">{{ o.hint }}</div>
+                  </sc-if>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isTrip }}">
+          <div data-screen-label="Trip in progress" style="display:flex;flex-direction:column;min-height:100%">
+            <div style="background:{{ accentDark }};color:#f5ead8;padding:18px 20px 24px;border-radius:0 0 34px 34px">
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+                <button onClick="{{ goResults }}" style="width:38px;height:38px;border:0;border-radius:999px;background:rgba(245,234,216,.18);color:#f5ead8;display:flex;align-items:center;justify-content:center;cursor:pointer"><i data-lucide="arrow-left" width="18" height="18"></i></button>
+                <span style="font-size:13px;letter-spacing:.09em;text-transform:uppercase;opacity:.85">{{ t.tripLabel }}</span>
+              </div>
+              <div style="font-size:13px;opacity:.85">{{ t.nextStop }}</div>
+              <div style="font-family:Caprasimo,serif;font-size:30px;line-height:1.1;margin:2px 0 12px">Av. Chile</div>
+              <div style="display:flex;align-items:center;gap:16px">
+                <div style="display:flex;align-items:baseline;gap:6px"><span style="font-family:Caprasimo,serif;font-size:38px;line-height:1">2</span><span style="font-size:14px;opacity:.85">min</span></div>
+                <div style="height:34px;width:1px;background:rgba(245,234,216,.35)"></div>
+                <div style="font-size:13px;line-height:1.4;opacity:.9">{{ t.arriveAt }}<br><strong style="font-family:Caprasimo,serif;font-size:16px;font-weight:400">8:47 a.m.</strong></div>
+              </div>
+            </div>
+            <div style="padding:20px 20px 24px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;flex-direction:column">
+                <sc-for list="{{ tripStops }}" as="s" hint-placeholder-count="5">
+                  <div style="display:flex;gap:14px;align-items:stretch">
+                    <div style="width:22px;flex:none;display:flex;flex-direction:column;align-items:center">
+                      <div style="{{ s.dot }}"></div>
+                      <div style="{{ s.line }}"></div>
+                    </div>
+                    <div style="padding-bottom:16px;flex:1;display:flex;justify-content:space-between;gap:10px">
+                      <div>
+                        <div style="{{ s.nameStyle }}">{{ s.name }}</div>
+                        <div style="font-size:12px;color:var(--neu6)">{{ s.note }}</div>
+                      </div>
+                      <div style="font-size:12.5px;color:var(--neu7);flex:none">{{ s.time }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <button onClick="{{ toggleNotify }}" style="{{ notifyStyle }}">
+                <i data-lucide="bell-ring" width="18" height="18"></i>{{ notifyLabel }}
+              </button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isMap }}">
+          <div data-screen-label="Live map" style="display:flex;flex-direction:column;min-height:100%">
+            <div style="position:relative;height:330px;background:var(--surf);overflow:hidden">
+              <svg viewBox="0 0 412 330" width="100%" height="330" style="display:block">
+                <rect width="412" height="330" fill="#ebddc5"></rect>
+                <circle cx="70" cy="60" r="90" fill="#e1eecc" opacity=".8"></circle>
+                <circle cx="360" cy="280" r="110" fill="#f9f4ed" opacity=".7"></circle>
+                <path d="M20 300 C 120 250, 130 130, 250 100 S 380 60, 400 30" stroke="{{ accent }}" stroke-width="10" fill="none" stroke-linecap="round"></path>
+                <path d="M0 170 C 90 160, 160 210, 240 200 S 360 150, 412 170" stroke="#8fa073" stroke-width="8" fill="none" stroke-linecap="round"></path>
+                <path d="M120 330 C 140 250, 200 230, 210 150 S 250 60, 300 0" stroke="#a19786" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="2 14"></path>
+                <circle cx="250" cy="100" r="11" fill="#f5ead8" stroke="{{ accent }}" stroke-width="5"></circle>
+                <circle cx="240" cy="200" r="9" fill="#f5ead8" stroke="#8fa073" stroke-width="5"></circle>
+                <circle cx="120" cy="205" r="9" fill="#f5ead8" stroke="#8fa073" stroke-width="5"></circle>
+                <circle cx="210" cy="150" r="20" fill="{{ accent }}" opacity=".18"></circle>
+                <circle cx="210" cy="150" r="8" fill="{{ accent }}" stroke="#f5ead8" stroke-width="3"></circle>
+              </svg>
+              <div style="position:absolute;left:16px;top:16px;right:16px;display:flex;gap:8px">
+                <div style="flex:1;height:44px;border-radius:999px;background:var(--bg);box-shadow:0 3px 10px rgba(46,43,37,.16);display:flex;align-items:center;gap:10px;padding:0 16px">
+                  <i data-lucide="search" width="17" height="17" style="color:var(--neu6)"></i>
+                  <span style="font-size:14px;color:var(--neu6)">{{ t.searchStations }}</span>
+                </div>
+                <button style="width:44px;height:44px;flex:none;border:0;border-radius:999px;background:var(--bg);box-shadow:0 3px 10px rgba(46,43,37,.16);color:{{ accentDark }};display:flex;align-items:center;justify-content:center;cursor:pointer"><i data-lucide="locate-fixed" width="19" height="19"></i></button>
+              </div>
+              <div style="position:absolute;left:16px;bottom:14px;display:flex;gap:6px;flex-wrap:wrap">
+                <sc-for list="{{ mapLegend }}" as="l" hint-placeholder-count="3">
+                  <span style="{{ l.style }}">{{ l.label }}</span>
+                </sc-for>
+              </div>
+            </div>
+            <div style="margin-top:-24px;border-radius:34px 34px 0 0;background:var(--bg);padding:16px 18px 24px;position:relative;flex:1">
+              <div style="width:44px;height:5px;border-radius:999px;background:var(--surf2);margin:0 auto 14px"></div>
+              <h3 style="font-family:Caprasimo,serif;font-size:20px;margin:0 0 12px">{{ t.nearbyStations }}</h3>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <sc-for list="{{ nearbyStations }}" as="s" hint-placeholder-count="3">
+                  <button onClick="{{ s.go }}" style="text-align:left;width:100%;border:0;background:var(--surf);border-radius:28px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:inherit" style-hover="background:var(--surf2)">
+                    <div style="flex:1;min-width:0">
+                      <div style="font-family:Caprasimo,serif;font-size:16px;line-height:1.2">{{ s.name }}</div>
+                      <div style="font-size:12.5px;color:var(--neu7)">{{ s.meta }}</div>
+                    </div>
+                    <span style="font-size:12.5px;color:var(--neu7)">{{ s.dist }}</span>
+                    <i data-lucide="chevron-right" width="18" height="18" style="color:var(--neu6)"></i>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isStation }}">
+          <div data-screen-label="Station detail" style="padding:16px 18px 24px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <button onClick="{{ goMap }}" style="width:40px;height:40px;flex:none;border:0;border-radius:999px;background:var(--surf);color:var(--neu7b);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--surf2)"><i data-lucide="arrow-left" width="19" height="19"></i></button>
+              <div style="flex:1;min-width:0">
+                <h2 style="font-family:Caprasimo,serif;font-size:24px;margin:0;line-height:1.1">Calle 26</h2>
+                <div style="font-size:12.5px;color:var(--neu7)">{{ t.stationMeta }}</div>
+              </div>
+              <button onClick="{{ toggleFav }}" style="{{ favStyle }}"><i data-lucide="star" width="19" height="19"></i></button>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <span style="display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:var(--sage-bg);color:var(--sage-text);padding:6px 12px;font-size:12.5px"><i data-lucide="accessibility" width="14" height="14"></i>{{ t.accessible }}</span>
+              <span style="display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:{{ accentLight }};color:{{ accentDark }};padding:6px 12px;font-size:12.5px"><i data-lucide="users" width="14" height="14"></i>{{ t.busyNow }}</span>
+            </div>
+            <h3 style="font-family:Caprasimo,serif;font-size:20px;margin:4px 0 0">{{ t.arrivals }}</h3>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ arrivals }}" as="a" hint-placeholder-count="5">
+                <button onClick="{{ a.go }}" style="text-align:left;width:100%;border:0;background:var(--surf);border-radius:26px;padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:inherit" style-hover="background:var(--surf2)">
+                  <span style="{{ a.badgeStyle }}">{{ a.line }}</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-weight:600;font-size:14px">{{ a.dest }}</div>
+                    <div style="font-size:12px;color:var(--neu7)">{{ a.type }}</div>
+                  </div>
+                  <div style="text-align:right">
+                    <div style="font-family:Caprasimo,serif;font-size:18px;color:{{ accentDark }};line-height:1">{{ a.mins }}</div>
+                    <div style="font-size:11px;color:var(--neu6)">min</div>
+                  </div>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isRoutes }}">
+          <div data-screen-label="Routes" style="padding:20px 18px 24px;display:flex;flex-direction:column;gap:16px">
+            <h2 style="font-family:Caprasimo,serif;font-size:28px;margin:0">{{ t.routesTitle }}</h2>
+            <div style="display:flex;gap:6px">
+              <button onClick="{{ typeTroncal }}" style="{{ typeTroncalStyle }}">{{ t.troncal }}</button>
+              <button onClick="{{ typeZonal }}" style="{{ typeZonalStyle }}">{{ t.zonal }}</button>
+              <button onClick="{{ typeAlim }}" style="{{ typeAlimStyle }}">{{ t.alimentadora }}</button>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;background:{{ typeTint }};border-radius:26px;padding:14px 16px">
+              <div style="width:12px;height:12px;border-radius:999px;flex:none;margin-top:5px;background:{{ typeColor }}"></div>
+              <div>
+                <div style="font-family:Caprasimo,serif;font-size:16px;line-height:1.2">{{ typeTitle }}</div>
+                <div style="font-size:12.5px;color:var(--neu7b);line-height:1.45">{{ typeDesc }}</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ typeRoutes }}" as="r" hint-placeholder-count="4">
+                <button onClick="{{ r.go }}" style="text-align:left;width:100%;border:0;background:var(--surf);border-radius:26px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:inherit" style-hover="background:var(--surf2)">
+                  <span style="{{ r.badgeStyle }}">{{ r.code }}</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-weight:600;font-size:14px">{{ r.name }}</div>
+                    <div style="font-size:12px;color:var(--neu7)">{{ r.meta }}</div>
+                  </div>
+                  <i data-lucide="chevron-right" width="18" height="18" style="color:var(--neu6)"></i>
+                </button>
+              </sc-for>
+            </div>
+            <button onClick="{{ goSchedules }}" style="width:100%;height:48px;border:1px solid var(--border);border-radius:999px;background:transparent;font-family:Caprasimo,serif;font-size:15px;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer" style-hover="background:var(--hover)">
+              <i data-lucide="clock" width="17" height="17"></i>{{ t.seeSchedules }}
+            </button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isRouteDetail }}">
+          <div data-screen-label="Route detail" style="padding:16px 18px 24px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <button onClick="{{ goRoutes }}" style="width:40px;height:40px;flex:none;border:0;border-radius:999px;background:var(--surf);color:var(--neu7b);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--surf2)"><i data-lucide="arrow-left" width="19" height="19"></i></button>
+              <span style="display:inline-flex;align-items:center;justify-content:center;min-width:46px;height:34px;padding:0 12px;border-radius:999px;background:{{ accent }};color:#f5ead8;font-family:Caprasimo,serif;font-size:16px">K9</span>
+              <div style="min-width:0">
+                <div style="font-family:Caprasimo,serif;font-size:19px;line-height:1.15">Suba — Calle 26</div>
+                <div style="font-size:12.5px;color:var(--neu7)">{{ t.routeMeta }}</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px">
+              <div style="flex:1;background:var(--surf);border-radius:24px;padding:12px 14px">
+                <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--neu6)">{{ t.frequency }}</div>
+                <div style="font-family:Caprasimo,serif;font-size:19px">4 min</div>
+              </div>
+              <div style="flex:1;background:var(--surf);border-radius:24px;padding:12px 14px">
+                <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--neu6)">{{ t.firstLast }}</div>
+                <div style="font-family:Caprasimo,serif;font-size:19px">4:30 — 23:00</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column">
+              <sc-for list="{{ routeStops }}" as="s" hint-placeholder-count="7">
+                <div style="display:flex;gap:14px;align-items:stretch">
+                  <div style="width:22px;flex:none;display:flex;flex-direction:column;align-items:center">
+                    <div style="{{ s.dot }}"></div>
+                    <div style="{{ s.line }}"></div>
+                  </div>
+                  <div style="padding-bottom:14px;flex:1;display:flex;justify-content:space-between;gap:10px">
+                    <div style="font-size:14px;font-weight:500">{{ s.name }}</div>
+                    <div style="font-size:12.5px;color:var(--neu7);flex:none">{{ s.time }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSchedules }}">
+          <div data-screen-label="Schedules" style="padding:16px 18px 24px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <button onClick="{{ goRoutes }}" style="width:40px;height:40px;flex:none;border:0;border-radius:999px;background:var(--surf);color:var(--neu7b);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--surf2)"><i data-lucide="arrow-left" width="19" height="19"></i></button>
+              <h2 style="font-family:Caprasimo,serif;font-size:24px;margin:0">{{ t.schedulesTitle }}</h2>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button onClick="{{ dayWeek }}" style="{{ dayWeekStyle }}">{{ t.weekday }}</button>
+              <button onClick="{{ daySat }}" style="{{ daySatStyle }}">{{ t.saturday }}</button>
+              <button onClick="{{ daySun }}" style="{{ daySunStyle }}">{{ t.sunday }}</button>
+            </div>
+            <div style="background:var(--surf);border-radius:28px;padding:8px 16px 12px">
+              <table style="width:100%;border-collapse:collapse;font-size:14px">
+                <thead>
+                  <tr>
+                    <th style="text-align:left;font:400 11px/1.4 Figtree,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--neu6);padding:10px 0;border-bottom:1px solid var(--border)">{{ t.band }}</th>
+                    <th style="text-align:right;font:400 11px/1.4 Figtree,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--neu6);padding:10px 0;border-bottom:1px solid var(--border)">{{ t.everyCol }}</th>
+                    <th style="text-align:right;font:400 11px/1.4 Figtree,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--neu6);padding:10px 0;border-bottom:1px solid var(--border)">{{ t.loadCol }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ scheduleRows }}" as="r" hint-placeholder-count="5">
+                    <tr>
+                      <td style="padding:11px 0;border-bottom:1px solid var(--border2);font-weight:500">{{ r.band }}</td>
+                      <td style="padding:11px 0;border-bottom:1px solid var(--border2);text-align:right">{{ r.every }}</td>
+                      <td style="padding:11px 0;border-bottom:1px solid var(--border2);text-align:right"><span style="{{ r.loadStyle }}">{{ r.load }}</span></td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+            <div style="font-size:12.5px;color:var(--neu7);line-height:1.5">{{ t.schedulesNote }}</div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isAlerts }}">
+          <div data-screen-label="Alerts" style="padding:20px 18px 24px;display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between">
+              <h2 style="font-family:Caprasimo,serif;font-size:28px;margin:0">{{ t.alertsTitle }}</h2>
+              <span style="font-size:12.5px;color:var(--neu6)">{{ t.updatedNow }}</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ alerts }}" as="a" hint-placeholder-count="4">
+                <div style="{{ a.cardStyle }}">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span style="{{ a.tagStyle }}">{{ a.tag }}</span>
+                    <span style="font-size:11.5px;color:var(--neu6);margin-left:auto">{{ a.time }}</span>
+                  </div>
+                  <div style="font-family:Caprasimo,serif;font-size:17px;line-height:1.2">{{ a.title }}</div>
+                  <div style="font-size:13px;color:var(--neu7b);line-height:1.5">{{ a.body }}</div>
+                  <sc-if value="{{ a.hasAction }}">
+                    <button onClick="{{ a.go }}" style="align-self:flex-start;border:0;background:none;color:{{ accentDark }};font:600 13px Figtree,system-ui,sans-serif;cursor:pointer;padding:2px 0" style-hover="color:{{ accentHover }}">{{ a.action }}</button>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isProfile }}">
+          <div data-screen-label="Profile" style="padding:20px 18px 24px;display:flex;flex-direction:column;gap:18px">
+            <h2 style="font-family:Caprasimo,serif;font-size:28px;margin:0">{{ t.profileTitle }}</h2>
+            <div style="display:flex;align-items:center;gap:14px;background:var(--surf);border-radius:30px;padding:16px">
+              <div style="width:56px;height:56px;border-radius:999px;background:{{ accent }};color:#f5ead8;display:flex;align-items:center;justify-content:center;font-family:Caprasimo,serif;font-size:22px">LS</div>
+              <div>
+                <div style="font-family:Caprasimo,serif;font-size:19px;line-height:1.15">Laura Sánchez</div>
+                <div style="font-size:12.5px;color:var(--neu7)">{{ t.profileMeta }}</div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--neu6);margin-bottom:8px">{{ t.preferences }}</div>
+              <div style="background:var(--surf);border-radius:30px;padding:6px 16px">
+                <div style="display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border2)">
+                  <i data-lucide="languages" width="19" height="19" style="color:{{ accentDark }}"></i>
+                  <span style="flex:1;font-size:14px;font-weight:500">{{ t.language }}</span>
+                  <div style="display:flex;border:1px solid var(--border);border-radius:999px;overflow:hidden">
+                    <button onClick="{{ setEs }}" style="{{ langEsStyle }}">Español</button>
+                    <button onClick="{{ setEn }}" style="{{ langEnStyle }}">English</button>
+                  </div>
+                </div>
+                <button onClick="{{ toggleBeginner }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:14px 0;border:0;border-bottom:1px solid var(--border2);background:none;font-family:inherit;cursor:pointer;text-align:left">
+                  <i data-lucide="sprout" width="19" height="19" style="color:{{ sageInk }}"></i>
+                  <span style="flex:1;font-size:14px;font-weight:500">{{ t.beginner }}</span>
+                  <div style="{{ switchTrack }}"><div style="{{ switchKnob }}"></div></div>
+                </button>
+                <button onClick="{{ toggleNotify }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:14px 0;border:0;background:none;font-family:inherit;cursor:pointer;text-align:left">
+                  <i data-lucide="bell" width="19" height="19" style="color:{{ accentDark }}"></i>
+                  <span style="flex:1;font-size:14px;font-weight:500">{{ t.disruptionAlerts }}</span>
+                  <div style="{{ notifyTrack }}"><div style="{{ notifyKnob }}"></div></div>
+                </button>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--neu6);margin-bottom:8px">{{ t.theme }}</div>
+              <div style="background:var(--surf);border-radius:30px;padding:8px">
+                <sc-for list="{{ themeOptions }}" as="o" hint-placeholder-count="3">
+                  <button onClick="{{ o.go }}" style="{{ o.rowStyle }}">
+                    <span style="{{ o.radio }}"><span style="{{ o.dot }}"></span></span>
+                    <i data-lucide="{{ o.icon }}" width="18" height="18" style="color:{{ accentDark }}"></i>
+                    <span style="font-size:14px;font-weight:500">{{ o.label }}</span>
+                  </button>
+                </sc-for>
+              </div>
+              <div style="font-size:12.5px;color:var(--neu7);margin:8px 4px 0">{{ t.themeDesc }}</div>
+            </div>
+            <div>
+              <div style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--neu6);margin-bottom:8px">{{ t.colors }}</div>
+              <div style="background:var(--surf);border-radius:30px;padding:16px;display:flex;gap:14px;flex-wrap:wrap">
+                <sc-for list="{{ colorOptions }}" as="c" hint-placeholder-count="6">
+                  <button onClick="{{ c.go }}" style="border:0;background:none;cursor:pointer;padding:2px;display:flex;flex-direction:column;align-items:center;gap:6px;font-family:inherit">
+                    <span style="{{ c.swatch }}"></span>
+                    <span style="font-size:11px;color:var(--neu7b)">{{ c.label }}</span>
+                  </button>
+                </sc-for>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:2px">
+                  <div style="position:relative;width:34px;height:34px;border-radius:999px;overflow:hidden;border:2px dashed var(--neu6)">
+                    <input type="color" value="{{ customColorValue }}" onChange="{{ setCustomColor }}" style="position:absolute;top:-6px;left:-6px;width:46px;height:46px;border:0;padding:0;cursor:pointer">
+                  </div>
+                  <span style="font-size:11px;color:var(--neu7b)">{{ t.custom }}</span>
+                </div>
+              </div>
+              <div style="font-size:12.5px;color:var(--neu7);margin:8px 4px 0">{{ t.colorsDesc }}</div>
+            </div>
+            <div>
+              <div style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--neu6);margin-bottom:8px">{{ t.savedPlaces }}</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <sc-for list="{{ savedDetail }}" as="p" hint-placeholder-count="2">
+                  <div style="display:flex;align-items:center;gap:12px;background:var(--surf);border-radius:26px;padding:13px 16px">
+                    <div style="width:36px;height:36px;flex:none;border-radius:999px;background:var(--bg);color:{{ accentDark }};display:flex;align-items:center;justify-content:center"><i data-lucide="{{ p.icon }}" width="17" height="17"></i></div>
+                    <div style="flex:1;min-width:0">
+                      <div style="font-weight:600;font-size:14px">{{ p.label }}</div>
+                      <div style="font-size:12px;color:var(--neu7)">{{ p.addr }}</div>
+                    </div>
+                    <i data-lucide="pencil" width="16" height="16" style="color:var(--neu6)"></i>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <button onClick="{{ goOnboarding }}" style="width:100%;height:46px;border:1px solid var(--border);border-radius:999px;background:transparent;font-family:Caprasimo,serif;font-size:14px;color:var(--ink);cursor:pointer" style-hover="background:var(--hover)">{{ t.replayIntro }}</button>
+          </div>
+        </sc-if>
+
+      </div>
+
+      <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+        <nav style="display:grid;grid-template-columns:repeat(5,1fr);background:var(--surf);border-top:1px solid var(--border);padding:6px 4px 8px">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+            <button onClick="{{ n.go }}" style="{{ n.style }}">
+              <i data-lucide="{{ n.icon }}" width="21" height="21"></i>
+              <span style="font-size:11px;font-weight:600">{{ n.label }}</span>
+            </button>
+          </sc-for>
+        </nav>
+      </sc-if>
+
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:1040},&quot;language&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es' | 'en'&quot;,&quot;section&quot;:&quot;App&quot;},&quot;beginnerMode&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;App&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;terracotta&quot;,&quot;sage&quot;,&quot;ochre&quot;,&quot;clay&quot;,&quot;plum&quot;,&quot;slate&quot;],&quot;default&quot;:&quot;terracotta&quot;,&quot;tsType&quot;:&quot;'terracotta'|'sage'|'ochre'|'clay'|'plum'|'slate'&quot;,&quot;section&quot;:&quot;App&quot;}}">
+const SAGE = "#8fa073", SAGE7 = "#56633f", CREAM = "#f5ead8";
+
+function shade(hex, percent) {
+  const n = parseInt(hex.slice(1), 16);
+  let r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  const t = percent < 0 ? 0 : 255, p = Math.abs(percent) / 100;
+  r = Math.round((t - r) * p) + r; g = Math.round((t - g) * p) + g; b = Math.round((t - b) * p) + b;
+  return "#" + [r, g, b].map(x => Math.max(0, Math.min(255, x)).toString(16).padStart(2, "0")).join("");
+}
+
+const THEME_LIGHT = { bg: "#f5ead8", surf: "#ebddc5", surf2: "#dcd3c4", ink: "#201e1d", neu6: "#82796a", neu7: "#645c50", neu7b: "#474238", border: "rgba(32,30,29,.16)", border2: "rgba(32,30,29,.08)", hover: "rgba(32,30,29,.07)", sageBg: "#e1eecc", sageText: "#3d472b", muted: "#c0b6a5" };
+const THEME_DARK = { bg: "#1c1a17", surf: "#2a2621", surf2: "#3a352d", ink: "#f2ead9", neu6: "#a89e8e", neu7: "#c2b8a6", neu7b: "#d8cdb9", border: "rgba(242,234,217,.16)", border2: "rgba(242,234,217,.08)", hover: "rgba(242,234,217,.08)", sageBg: "#2c3323", sageText: "#c3d9a0", muted: "#55504a" };
+
+const ACCENT_PALETTE = [
+  { id: "terracotta", base: "#c67139", dark: "#8c491a", light: "#ffe1d0", es: "Terracota", en: "Terracotta" },
+  { id: "sage", base: "#7a8a5e", dark: "#4d5a3a", light: "#e1eecc", es: "Salvia", en: "Sage" },
+  { id: "ochre", base: "#b8873a", dark: "#7c5a22", light: "#f6e6c3", es: "Ocre", en: "Ochre" },
+  { id: "clay", base: "#b5563f", dark: "#7c3a28", light: "#f3d9cf", es: "Arcilla", en: "Clay" },
+  { id: "plum", base: "#8a5a7a", dark: "#5e3c53", light: "#ecdae6", es: "Ciruela", en: "Plum" },
+  { id: "slate", base: "#4f7285", dark: "#33505f", light: "#d8e6ea", es: "Pizarra", en: "Slate" }
+];
+
+const STR = {
+  es: {
+    onbTitle: "Muévete por Bogotá sin adivinar",
+    onbSub: "Rutas, llegadas en vivo y avisos del sistema, explicados en español claro.",
+    onb1t: "Planea en dos toques", onb1d: "Escribe a dónde vas y elige la mejor opción.",
+    onb2t: "Mira el bus llegar", onb2d: "Minutos reales, no horarios teóricos.",
+    onb3t: "Entérate antes", onb3d: "Demoras y cierres de tus rutas guardadas.",
+    beginner: "Modo principiante", beginnerDesc: "Explicaciones extra en cada paso",
+    start: "Empezar",
+    greeting: "Buenos días", homeTitle: "¿Para dónde vamos?",
+    from: "Desde", to: "Hasta", search: "Buscar ruta",
+    home: "Casa", work: "Trabajo", uni: "Universidad",
+    beginnerTip: "Troncal = bus rojo por carril exclusivo. Zonal = bus azul por calle normal. Alimentadora = gratis desde el portal.",
+    nearby: "Cerca de ti", seeMap: "Ver mapa",
+    alertHomeTitle: "Demora en Estación Calle 26", alertHomeBody: "5 minutos adicionales en B1 y K9",
+    resultsMeta: "Sale ahora · 3 opciones", fastest: "Más rápido", fewest: "Menos transbordos",
+    tripLabel: "Viaje en curso", nextStop: "Próxima parada", arriveAt: "Llegas a Calle 26",
+    notifyOn: "Te avisamos al llegar", notifyOff: "Avísame al llegar",
+    searchStations: "Buscar estación o destino", nearbyStations: "Estaciones cercanas",
+    stationMeta: "Troncal Caracas · 4 rutas", accessible: "Accesible", busyNow: "Llena ahora",
+    arrivals: "Próximas llegadas",
+    routesTitle: "Rutas", troncal: "Troncal", zonal: "Zonal", alimentadora: "Alimentadora",
+    seeSchedules: "Ver horarios y frecuencias",
+    routeMeta: "Troncal · 18 paradas", frequency: "Frecuencia", firstLast: "Primero — último",
+    schedulesTitle: "Horarios", weekday: "Entre semana", saturday: "Sábado", sunday: "Domingo",
+    band: "Franja", everyCol: "Cada", loadCol: "Ocupación",
+    schedulesNote: "Frecuencias promedio de la ruta K9. Pueden variar por tráfico y eventos.",
+    alertsTitle: "Alertas", updatedNow: "Hace 1 minuto",
+    profileTitle: "Configuraciones", profileMeta: "Usuaria desde 2024 · 312 viajes",
+    preferences: "Preferencias", language: "Idioma", disruptionAlerts: "Avisos de demoras",
+    savedPlaces: "Lugares guardados", replayIntro: "Ver la introducción otra vez",
+    theme: "Tema de la aplicación", themeDesc: "Elige cómo se ve la app en tu dispositivo",
+    colors: "Color de la app", colorsDesc: "Elige el color principal de la aplicación", custom: "Personalizado",
+    light: "Claro", dark: "Oscuro", system: "Sistema",
+    navHome: "Inicio", navMap: "Mapa", navRoutes: "Rutas", navSchedules: "Horarios", navConfig: "Config", navAlerts: "Alertas", navProfile: "Perfil"
+  },
+  en: {
+    onbTitle: "Get around Bogotá without guessing",
+    onbSub: "Routes, live arrivals and service alerts, in plain language.",
+    onb1t: "Plan in two taps", onb1d: "Type where you're going and pick the best option.",
+    onb2t: "Watch the bus arrive", onb2d: "Real minutes, not timetable theory.",
+    onb3t: "Know before you go", onb3d: "Delays and closures on your saved routes.",
+    beginner: "Beginner mode", beginnerDesc: "Extra guidance at every step",
+    start: "Get started",
+    greeting: "Good morning", homeTitle: "Where to today?",
+    from: "From", to: "To", search: "Find route",
+    home: "Home", work: "Work", uni: "University",
+    beginnerTip: "Troncal = red bus in its own lane. Zonal = blue bus in street traffic. Alimentadora = free feeder from the portal.",
+    nearby: "Near you", seeMap: "See map",
+    alertHomeTitle: "Delay at Calle 26 station", alertHomeBody: "5 extra minutes on B1 and K9",
+    resultsMeta: "Leaving now · 3 options", fastest: "Fastest", fewest: "Fewest transfers",
+    tripLabel: "Trip in progress", nextStop: "Next stop", arriveAt: "Arrive at Calle 26",
+    notifyOn: "We'll alert you on arrival", notifyOff: "Alert me on arrival",
+    searchStations: "Search station or destination", nearbyStations: "Nearby stations",
+    stationMeta: "Caracas trunk line · 4 routes", accessible: "Step-free", busyNow: "Crowded now",
+    arrivals: "Next arrivals",
+    routesTitle: "Routes", troncal: "Trunk", zonal: "Zonal", alimentadora: "Feeder",
+    seeSchedules: "See schedules and frequencies",
+    routeMeta: "Trunk · 18 stops", frequency: "Frequency", firstLast: "First — last",
+    schedulesTitle: "Schedules", weekday: "Weekday", saturday: "Saturday", sunday: "Sunday",
+    band: "Time band", everyCol: "Every", loadCol: "Load",
+    schedulesNote: "Average frequencies for route K9. They vary with traffic and events.",
+    alertsTitle: "Alerts", updatedNow: "1 minute ago",
+    profileTitle: "Settings", profileMeta: "Rider since 2024 · 312 trips",
+    preferences: "Preferences", language: "Language", disruptionAlerts: "Disruption alerts",
+    savedPlaces: "Saved places", replayIntro: "Replay the intro",
+    theme: "App theme", themeDesc: "Choose how the app looks on your device",
+    colors: "App color", colorsDesc: "Choose the app's main color", custom: "Custom",
+    light: "Light", dark: "Dark", system: "System",
+    navHome: "Home", navMap: "Map", navRoutes: "Routes", navSchedules: "Schedules", navConfig: "Settings", navAlerts: "Alerts", navProfile: "Profile"
+  }
+};
+
+class Component extends DCLogic {
+  state = {
+    screen: "home", lang: null, beginner: null, notify: false, fav: true,
+    origin: "Suba", destination: "Calle 26", sort: "fast", routeType: "troncal", day: "week"
+  };
+  icons() { if (window.lucide) window.lucide.createIcons(); }
+  componentDidMount() { this.icons(); [300, 900, 1800].forEach(d => setTimeout(() => this.icons(), d)); }
+  componentDidUpdate() { this.icons(); }
+
+  go(s) { return () => this.setState({ screen: s }); }
+  pill(active, extra) {
+    return "flex:1;height:38px;border-radius:999px;border:1px solid " + (active ? "transparent" : this.BORDER) +
+      ";background:" + (active ? this.ACC : "transparent") + ";color:" + (active ? CREAM : this.INK) +
+      ";font:500 13px Figtree,system-ui,sans-serif;cursor:pointer;" + (extra || "");
+  }
+  segBtn(active) {
+    return "border:0;padding:7px 13px;font:500 12px Figtree,system-ui,sans-serif;cursor:pointer;background:" +
+      (active ? this.ACC : "transparent") + ";color:" + (active ? CREAM : this.INK);
+  }
+  toggle(on, color) {
+    return {
+      track: "width:46px;height:27px;flex:none;border-radius:999px;padding:3px;display:flex;background:" + (on ? (color || this.SAGE_INK) : this.MUTED) + ";transition:background .18s",
+      knob: "width:21px;height:21px;border-radius:999px;background:" + CREAM + ";transition:margin-left .18s;margin-left:" + (on ? "19px" : "0")
+    };
+  }
+  badge(bg, fg) {
+    return "display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:28px;padding:0 10px;flex:none;border-radius:999px;background:" + bg + ";color:" + fg + ";font-family:Caprasimo,serif;font-size:13px";
+  }
+  dotLine(kind, last) {
+    const done = kind === "done", now = kind === "now";
+    return {
+      dot: "width:" + (now ? "18px" : "12px") + ";height:" + (now ? "18px" : "12px") + ";flex:none;border-radius:999px;margin-top:3px;background:" +
+        (now ? this.ACC : done ? this.MUTED : this.BG) + ";border:" + (now ? "4px solid " + this.ACC_LIGHT : done ? "0" : "3px solid " + this.MUTED),
+      line: last ? "display:none" : "flex:1;width:3px;background:" + (done ? this.MUTED : this.SURF2) + ";margin:3px 0"
+    };
+  }
+
+  renderVals() {
+    const lang = this.state.lang ?? (this.props.language || "es");
+    const beginner = this.state.beginner ?? (this.props.beginnerMode ?? true);
+    const accentId = this.state.accent ?? (this.props.accentColor || "terracotta");
+    let pal = ACCENT_PALETTE.find(p => p.id === accentId);
+    if (!pal) pal = { base: accentId, dark: shade(accentId, -35), light: shade(accentId, 75) };
+    this.ACC = pal.base; this.ACC7 = pal.dark; this.ACC_LIGHT = pal.light;
+    const themeMode = this.state.theme ?? (this.props.themeMode || "system");
+    let isDark = themeMode === "dark";
+    if (themeMode === "system" && typeof window !== "undefined" && window.matchMedia) isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const theme = isDark ? THEME_DARK : THEME_LIGHT;
+    this.BG = theme.bg; this.SURF = theme.surf; this.SURF2 = theme.surf2; this.INK = theme.ink;
+    this.NEU6 = theme.neu6; this.NEU7 = theme.neu7; this.NEU7B = theme.neu7b;
+    this.BORDER = theme.border; this.BORDER2 = theme.border2; this.HOVER = theme.hover;
+    this.SAGE_BG = theme.sageBg; this.SAGE_TEXT = theme.sageText; this.MUTED = theme.muted;
+    // accent tokens must re-derive per theme: a dark-shade "ink" and light-shade "tint" swap direction between modes
+    this.ACC7 = isDark ? shade(pal.base, 50) : pal.dark;
+    this.ACC_LIGHT = isDark ? shade(pal.base, -55) : pal.light;
+    this.ACC_HOVER = isDark ? shade(pal.base, 16) : shade(pal.base, -16);
+    this.ACC_TINT_HOVER = isDark ? shade(this.ACC_LIGHT, 10) : shade(this.ACC_LIGHT, -10);
+    this.SAGE_INK = isDark ? shade(SAGE, 45) : SAGE7;
+    this.ZONAL = "#728157";
+    this.ZONAL_INK = isDark ? shade(this.ZONAL, 45) : this.ZONAL;
+    const t = STR[lang], s = this.state.screen, es = lang === "es";
+    const sw = this.toggle(beginner), nt = this.toggle(this.state.notify, this.ACC7);
+
+    const screens = [
+      ["onboarding", es ? "Onboarding" : "Onboarding"], ["home", t.navHome], ["results", es ? "Resultados" : "Results"],
+      ["trip", es ? "Viaje" : "Trip"], ["map", t.navMap], ["station", es ? "Estación" : "Station"],
+      ["routes", t.navRoutes], ["route", es ? "Ruta K9" : "Route K9"], ["schedules", t.schedulesTitle],
+      ["alerts", t.navAlerts], ["profile", t.navProfile]
+    ];
+
+    const navDef = [["home", "home", t.navHome], ["map", "map", t.navMap], ["routes", "route", t.navRoutes], ["schedules", "clock", t.navSchedules], ["profile", "settings", t.navConfig]];
+    const activeTab = { home: "home", results: "home", trip: "home", alerts: "home", map: "map", station: "map", routes: "routes", route: "routes", schedules: "schedules", profile: "profile" }[s];
+
+    const crowd = { low: [this.SAGE_INK, es ? "Van puestos" : "Seats free"], mid: [this.ACC7, es ? "Algo llena" : "Some standing"], high: [this.ACC7, es ? "Muy llena" : "Packed"] };
+    const legT = { bg: this.ACC, fg: CREAM }, legZ = { bg: this.ZONAL, fg: CREAM }, legW = { bg: this.SURF2, fg: this.INK };
+    const leg = (label, kind) => ({ label, style: "display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 11px;border-radius:999px;font:600 12px Figtree,system-ui,sans-serif;background:" + kind.bg + ";color:" + kind.fg });
+
+    const optCard = (best) => "text-align:left;width:100%;display:flex;flex-direction:column;gap:10px;border:" + (best ? "2px solid " + this.ACC : "1px solid " + this.BORDER) +
+      ";background:" + this.SURF + ";border-radius:30px;padding:16px;cursor:pointer;font-family:inherit;color:" + this.INK;
+
+    const opts = [
+      { mins: "34", transfers: es ? "1 transbordo" : "1 transfer", walk: es ? "6 min a pie" : "6 min walk", crowd: "mid", fare: "$3.200", best: true,
+        legs: [leg(es ? "A pie" : "Walk", legW), leg("K9", legT), leg("B1", legT)],
+        hint: es ? "Toma el K9 en Suba, cambia en Av. Chile al B1. Ambos son troncales: no pagas otra vez." : "Take K9 at Suba, change at Av. Chile to B1. Both are trunk lines, so no second fare." },
+      { mins: "41", transfers: es ? "Sin transbordos" : "No transfers", walk: es ? "11 min a pie" : "11 min walk", crowd: "low", fare: "$3.200", best: false,
+        legs: [leg(es ? "A pie" : "Walk", legW), leg("15-1", legZ)],
+        hint: es ? "Un solo bus zonal, más lento pero vas sentada casi siempre." : "One zonal bus. Slower, but you'll usually get a seat." },
+      { mins: "38", transfers: es ? "2 transbordos" : "2 transfers", walk: es ? "3 min a pie" : "3 min walk", crowd: "high", fare: "$3.200", best: false,
+        legs: [leg("6-2", legZ), leg("K9", legT), leg("B1", legT)],
+        hint: es ? "Menos caminata, pero dos cambios en hora pico." : "Less walking, but two changes at rush hour." }
+    ];
+    const sorted = this.state.sort === "fast" ? opts.slice().sort((a, b) => a.mins - b.mins) : opts.slice().sort((a, b) => a.legs.length - b.legs.length);
+
+    const tripRaw = [
+      ["Suba", es ? "Salida" : "Departed", "8:12", "done"], ["Niza Calle 127", "", "8:19", "done"],
+      ["Av. Chile", es ? "Cambio al B1" : "Change to B1", "8:33", "now"], ["Marly", "", "8:40", "next"], ["Calle 26", es ? "Destino" : "Destination", "8:47", "next"]
+    ];
+    const tripStops = tripRaw.map((r, i) => {
+      const dl = this.dotLine(r[3], i === tripRaw.length - 1);
+      return { name: r[0], note: r[1], time: r[2], dot: dl.dot, line: dl.line,
+        nameStyle: "font-size:" + (r[3] === "now" ? "16px" : "14px") + ";font-weight:" + (r[3] === "now" ? "700" : "500") + ";color:" + (r[3] === "done" ? this.NEU6 : this.INK) };
+    });
+
+    const rtNames = ["Portal Suba", "Suba Calle 100", "Niza Calle 127", "Av. Chile", "Calle 72", "Marly", "Calle 26"];
+    const routeStops = rtNames.map((n, i) => {
+      const dl = this.dotLine(i === 0 ? "now" : "next", i === rtNames.length - 1);
+      return { name: n, time: ["4:30", "4:38", "4:44", "4:52", "4:58", "5:03", "5:09"][i], dot: dl.dot, line: dl.line };
+    });
+
+    const typeMap = {
+      troncal: { color: this.ACC, tint: this.ACC_LIGHT, title: es ? "Rutas troncales" : "Trunk routes",
+        desc: es ? "Buses rojos por carril exclusivo, entre estaciones principales." : "Red buses in dedicated lanes between main stations.",
+        routes: [["B1", "Usme — Portal Norte", es ? "Cada 4 min" : "Every 4 min"], ["K9", "Suba — Calle 26", es ? "Cada 4 min" : "Every 4 min"], ["F19", "Portal Sur — Calle 100", es ? "Cada 7 min" : "Every 7 min"]] },
+      zonal: { color: this.ZONAL, tint: this.SAGE_BG, title: es ? "Rutas zonales" : "Zonal routes",
+        desc: es ? "Buses azules por calles normales; conectan barrios con el troncal." : "Blue buses on regular streets, linking neighbourhoods to the trunk.",
+        routes: [["15-1", "Fontibón — Centro", es ? "Cada 9 min" : "Every 9 min"], ["A03", "Soacha — Bosa", es ? "Cada 12 min" : "Every 12 min"], ["T21", "Chapinero — Suba", es ? "Cada 10 min" : "Every 10 min"]] },
+      alimentadora: { color: this.NEU7B, tint: this.SURF2, title: es ? "Rutas alimentadoras" : "Feeder routes",
+        desc: es ? "Salen de los portales hacia barrios periféricos; sin costo adicional." : "Run from portals to outer neighbourhoods at no extra fare.",
+        routes: [["6-2", "Portal Norte — Verbenal", es ? "Cada 8 min" : "Every 8 min"], ["8-1", "Portal Sur — Ciudad Bolívar", es ? "Cada 6 min" : "Every 6 min"]] }
+    }[this.state.routeType];
+
+    const loadTag = (label, kind) => "display:inline-flex;align-items:center;border-radius:999px;padding:3px 10px;font-size:11.5px;background:" +
+      (kind === "high" ? this.ACC_LIGHT : kind === "mid" ? this.SURF2 : this.SAGE_BG) + ";color:" + (kind === "high" ? this.ACC7 : kind === "mid" ? this.NEU7B : this.SAGE_TEXT);
+    const sched = {
+      week: [["5:00 — 6:30", "6 min", "mid"], ["6:30 — 8:30", "3 min", "high"], ["8:30 — 16:00", "7 min", "low"], ["16:00 — 19:30", "3 min", "high"], ["19:30 — 23:00", "9 min", "low"]],
+      sat: [["5:00 — 9:00", "8 min", "low"], ["9:00 — 14:00", "6 min", "mid"], ["14:00 — 19:00", "7 min", "mid"], ["19:00 — 23:00", "11 min", "low"]],
+      sun: [["6:00 — 10:00", "12 min", "low"], ["10:00 — 17:00", "9 min", "mid"], ["17:00 — 22:00", "12 min", "low"]]
+    }[this.state.day];
+    const loadLabel = { low: es ? "Baja" : "Light", mid: es ? "Media" : "Medium", high: es ? "Alta" : "Heavy" };
+
+    const alertDef = [
+      ["high", es ? "Demora" : "Delay", es ? "Demora en Estación Calle 26" : "Delay at Calle 26 station", es ? "Retraso de 5 minutos en las rutas B1 y K9 por congestión en la Caracas." : "Five-minute delay on B1 and K9 from congestion on Caracas.", es ? "Hace 2 min" : "2 min ago", true],
+      ["mid", es ? "Desvío" : "Detour", es ? "Desvío en la ruta 15-1" : "Detour on route 15-1", es ? "No para en Calle 63 hasta el 18 de septiembre por obra." : "Not stopping at Calle 63 until 18 September due to works.", es ? "Hace 22 min" : "22 min ago", false],
+      ["low", es ? "Normal" : "Normal", es ? "Servicio normal en el resto del sistema" : "Normal service elsewhere", es ? "Todas las demás rutas operan con normalidad." : "All other routes are running normally.", es ? "Hace 1 min" : "1 min ago", false],
+      ["mid", es ? "Evento" : "Event", es ? "Refuerzo por partido en El Campín" : "Extra service for the match at El Campín", es ? "Buses adicionales en K9 y B1 entre 18:00 y 23:00." : "Extra buses on K9 and B1 between 18:00 and 23:00.", es ? "Hoy" : "Today", false]
+    ];
+
+    const vals = {
+      t, beginner,
+      screenTabs: screens.map(([id, label]) => ({ label, go: this.go(id),
+        style: "border:0;border-radius:999px;padding:6px 12px;font:600 11.5px Figtree,system-ui,sans-serif;cursor:pointer;background:" +
+          (s === id ? "#201e1d" : "rgba(32,30,29,.08)") + ";color:" + (s === id ? CREAM : "#474238") })),
+      isOnboarding: s === "onboarding", isHome: s === "home", isResults: s === "results", isTrip: s === "trip",
+      isMap: s === "map", isStation: s === "station", isRoutes: s === "routes", isRouteDetail: s === "route",
+      isSchedules: s === "schedules", isAlerts: s === "alerts", isProfile: s === "profile",
+      showNav: s !== "onboarding" && s !== "trip",
+      navItems: navDef.map(([id, icon, label]) => ({ icon, label, go: this.go(id),
+        style: "display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 2px;border:0;background:none;font-family:inherit;cursor:pointer;color:" + (activeTab === id ? this.ACC7 : this.NEU6) })),
+      goHome: this.go("home"), goResults: this.go("results"), goMap: this.go("map"), goRoutes: this.go("routes"),
+      goSchedules: this.go("schedules"), goAlerts: this.go("alerts"), goProfile: this.go("profile"), goOnboarding: this.go("onboarding"),
+      setEs: () => this.setState({ lang: "es" }), setEn: () => this.setState({ lang: "en" }),
+      langEsStyle: this.segBtn(es), langEnStyle: this.segBtn(!es),
+      toggleBeginner: () => this.setState({ beginner: !beginner }),
+      beginnerRowStyle: "width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:" + this.SURF + ";border:0;border-radius:28px;padding:14px 16px;cursor:pointer;font-family:inherit;color:" + this.INK,
+      switchTrack: sw.track, switchKnob: sw.knob,
+      onbPoints: [{ icon: "route", title: t.onb1t, body: t.onb1d }, { icon: "bus-front", title: t.onb2t, body: t.onb2d }, { icon: "bell-ring", title: t.onb3t, body: t.onb3d }],
+      origin: this.state.origin, destination: this.state.destination,
+      setOrigin: (e) => this.setState({ origin: e.target.value }),
+      setDestination: (e) => this.setState({ destination: e.target.value }),
+      swap: () => this.setState({ origin: this.state.destination, destination: this.state.origin }),
+      savedPlaces: [{ icon: "house", label: t.home, go: this.go("results") }, { icon: "briefcase", label: t.work, go: this.go("results") }, { icon: "graduation-cap", label: t.uni, go: this.go("results") }],
+      themeOptions: [["light", "sun", t.light], ["dark", "moon", t.dark], ["system", "monitor", t.system]].map(([id, icon, label]) => ({
+        icon, label, go: () => this.setState({ theme: id }),
+        rowStyle: "width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;border:0;border-radius:999px;cursor:pointer;font-family:inherit;text-align:left;color:" + this.INK + ";background:" + ((this.state.theme || "system") === id ? this.ACC_LIGHT : "transparent"),
+        radio: "width:18px;height:18px;flex:none;border-radius:999px;display:flex;align-items:center;justify-content:center;border:2px solid " + ((this.state.theme || "system") === id ? this.ACC : this.MUTED),
+        dot: (this.state.theme || "system") === id ? "width:8px;height:8px;border-radius:999px;background:" + this.ACC : "display:none"
+      })),
+      colorOptions: ACCENT_PALETTE.map(p => ({
+        id: p.id, label: es ? p.es : p.en, go: () => this.setState({ accent: p.id }),
+        swatch: "width:34px;height:34px;border-radius:999px;background:" + p.base + ";box-shadow:" + (accentId === p.id ? "0 0 0 3px " + this.BG + ", 0 0 0 5px " + p.base : "0 0 0 0 transparent")
+      })),
+      customColorValue: /^#/.test(accentId) ? accentId : this.ACC,
+      setCustomColor: (e) => this.setState({ accent: e.target.value }),
+      accent: this.ACC, accentDark: this.ACC7, accentLight: this.ACC_LIGHT, accentHover: this.ACC_HOVER, accentTintHover: this.ACC_TINT_HOVER, sageInk: this.SAGE_INK,
+      themeVars: "--bg:" + this.BG + ";--surf:" + this.SURF + ";--surf2:" + this.SURF2 + ";--ink:" + this.INK + ";--neu6:" + this.NEU6 + ";--neu7:" + this.NEU7 + ";--neu7b:" + this.NEU7B + ";--border:" + this.BORDER + ";--border2:" + this.BORDER2 + ";--hover:" + this.HOVER + ";--sage-bg:" + this.SAGE_BG + ";--sage-text:" + this.SAGE_TEXT + ";--muted:" + this.MUTED,
+      bg: this.BG,
+      savedDetail: [{ icon: "house", label: t.home, addr: "Calle 145 #98-21, Suba" }, { icon: "briefcase", label: t.work, addr: "Av. Calle 26 #59-51" }],
+      nearbyStations: [
+        { name: "Calle 26", meta: es ? "Troncal · B1, K9, F19" : "Trunk · B1, K9, F19", mins: "2", dist: "180 m", go: this.go("station") },
+        { name: "Av. Chile", meta: es ? "Troncal · K9, B1" : "Trunk · K9, B1", mins: "6", dist: "550 m", go: this.go("station") },
+        { name: "Marly", meta: es ? "Troncal · B1" : "Trunk · B1", mins: "9", dist: "1,1 km", go: this.go("station") }
+      ],
+      sortFast: () => this.setState({ sort: "fast" }), sortEasy: () => this.setState({ sort: "easy" }),
+      sortFastStyle: this.pill(this.state.sort === "fast"), sortEasyStyle: this.pill(this.state.sort === "easy"),
+      options: sorted.map(o => ({ ...o, cardStyle: optCard(o.best), crowd: crowd[o.crowd][1], crowdColor: crowd[o.crowd][0], go: this.go("trip") })),
+      tripStops,
+      toggleNotify: () => this.setState({ notify: !this.state.notify }),
+      notifyLabel: this.state.notify ? t.notifyOn : t.notifyOff,
+      notifyStyle: "width:100%;height:50px;border-radius:999px;border:0;display:flex;align-items:center;justify-content:center;gap:9px;font-family:Caprasimo,serif;font-size:15px;cursor:pointer;background:" +
+        (this.state.notify ? this.SAGE_BG : this.ACC) + ";color:" + (this.state.notify ? SAGE7 : CREAM),
+      notifyTrack: nt.track, notifyKnob: nt.knob,
+      mapLegend: [[es ? "Troncal" : "Trunk", this.ACC], [es ? "Zonal" : "Zonal", "#728157"], [es ? "Alimentadora" : "Feeder", this.NEU6]].map(([label, c]) => ({
+        label, style: "display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:" + this.BG + ";color:" + this.INK + ";padding:5px 11px;font-size:11.5px;box-shadow:0 1px 2px rgba(46,43,37,.14);border-left:8px solid " + c }),
+      ),
+      toggleFav: () => this.setState({ fav: !this.state.fav }),
+      favStyle: "width:40px;height:40px;flex:none;border:0;border-radius:999px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:" +
+        (this.state.fav ? this.ACC_LIGHT : this.SURF) + ";color:" + (this.state.fav ? this.ACC7 : this.NEU7),
+      arrivals: [
+        { line: "K9", dest: "Portal Suba", type: es ? "Troncal" : "Trunk", mins: "2", badgeStyle: this.badge(this.ACC, CREAM) },
+        { line: "B1", dest: "Usme", type: es ? "Troncal" : "Trunk", mins: "4", badgeStyle: this.badge(this.ACC, CREAM) },
+        { line: "F19", dest: "Calle 100", type: es ? "Troncal" : "Trunk", mins: "7", badgeStyle: this.badge(this.ACC, CREAM) },
+        { line: "15-1", dest: "Fontibón", type: es ? "Zonal" : "Zonal", mins: "11", badgeStyle: this.badge("#728157", CREAM) }
+      ].map(a => ({ ...a, go: this.go("route") })),
+      typeTroncal: () => this.setState({ routeType: "troncal" }), typeZonal: () => this.setState({ routeType: "zonal" }), typeAlim: () => this.setState({ routeType: "alimentadora" }),
+      typeTroncalStyle: this.pill(this.state.routeType === "troncal"), typeZonalStyle: this.pill(this.state.routeType === "zonal"), typeAlimStyle: this.pill(this.state.routeType === "alimentadora"),
+      typeTint: typeMap.tint, typeColor: typeMap.color, typeTitle: typeMap.title, typeDesc: typeMap.desc,
+      typeRoutes: typeMap.routes.map(([code, name, meta]) => ({ code, name, meta, go: this.go("route"), badgeStyle: this.badge(typeMap.color, CREAM) })),
+      routeStops,
+      dayWeek: () => this.setState({ day: "week" }), daySat: () => this.setState({ day: "sat" }), daySun: () => this.setState({ day: "sun" }),
+      dayWeekStyle: this.pill(this.state.day === "week"), daySatStyle: this.pill(this.state.day === "sat"), daySunStyle: this.pill(this.state.day === "sun"),
+      scheduleRows: sched.map(([band, every, kind]) => ({ band, every, load: loadLabel[kind], loadStyle: loadTag(loadLabel[kind], kind) })),
+      alerts: alertDef.map(([sev, tag, title, body, time, hasAction]) => ({
+        tag, title, body, time, hasAction, action: es ? "Ver rutas afectadas" : "See affected routes", go: this.go("routes"),
+        cardStyle: "display:flex;flex-direction:column;gap:7px;border-radius:28px;padding:15px 17px;background:" +
+          (sev === "high" ? this.ACC_LIGHT : sev === "mid" ? this.SURF : this.SAGE_BG) + (sev === "high" ? ";border-left:5px solid " + this.ACC : ""),
+        tagStyle: "display:inline-flex;align-items:center;border-radius:999px;padding:3px 10px;font-size:11px;letter-spacing:.04em;background:" +
+          (sev === "high" ? this.ACC7 : sev === "mid" ? this.SURF2 : "#ccdbb2") + ";color:" + (sev === "high" ? CREAM : sev === "mid" ? this.NEU7B : this.SAGE_TEXT)
+      }))
+    };
+    return vals;
+  }
+}
+</script>
+</body>
+</html>
